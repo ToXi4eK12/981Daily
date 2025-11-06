@@ -129,6 +129,34 @@ function updateCalendar(pageOffset) {
 
     // ✅ запускаем live-обновление Firestore
     listenMonthColors(year, monthIndex);
+    updateDayNames(year, monthIndex);
+}
+// Заменить текст в заголовках дней недели
+function updateDayNames(year, monthIndex) {
+  const allDivs = document.querySelectorAll("main div");
+
+  allDivs.forEach(div => {
+      const dayNum = parseInt(div.querySelector(".DateNumber").textContent);
+
+      // Пропускаем скрытые ячейки
+      if (div.style.display === "none") return;
+
+      // Реальная дата
+      const realDate = new Date(year, monthIndex, dayNum);
+
+      const weekNames = [
+          "Su",
+          "Mn",
+          "Tu",
+          "We",
+          "Th",
+          "Fr",
+          "Sa"
+      ];
+
+      const weekday = realDate.getDay();
+      div.querySelector(".DayNames").textContent = weekNames[weekday];
+  });
 }
 
 
